@@ -8,6 +8,7 @@ import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
 import sun.swing.SwingUtilities2;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
@@ -18,11 +19,14 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class ProgressBarUi extends BasicProgressBarUI {
-    private static final float ONE_OVER_SEVEN = 1f / 7;
     private static final Color VIOLET = new Color(90, 0, 157);
     private static final Color mainColor = Color.WHITE;
     Icon selectedIcon;
@@ -87,18 +91,11 @@ public class ProgressBarUi extends BasicProgressBarUI {
         if (barRectWidth <= 0 || barRectHeight <= 0) {
             return;
         }
-        //boxRect = getBox(boxRect);
+
         g.setColor(new JBColor(Gray._240.withAlpha(50), Gray._128.withAlpha(50)));
         int w = c.getWidth();
         int h = c.getPreferredSize().height;
         if (!isEven(c.getHeight() - h)) h++;
-
-//        LinearGradientPaint baseRainbowPaint = new LinearGradientPaint(0, JBUI.scale(2), 0, h - JBUI.scale(6),
-//                new float[]{ONE_OVER_SEVEN * 1, ONE_OVER_SEVEN * 2, ONE_OVER_SEVEN * 3, ONE_OVER_SEVEN * 4, ONE_OVER_SEVEN * 5, ONE_OVER_SEVEN * 6, ONE_OVER_SEVEN * 7},
-//                new Color[]{Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.cyan, Color.blue, VIOLET});
-
-//        g.setPaint(mainColor);
-
         if (c.isOpaque()) {
             g.fillRect(0, (c.getHeight() - h) / 2, w, h);
         }
@@ -107,33 +104,11 @@ public class ProgressBarUi extends BasicProgressBarUI {
         g.translate(0, (c.getHeight() - h) / 2);
         int x = -offset;
 
-
-//        LinearGradientPaint baseRainbowPaint = new LinearGradientPaint(0, JBUI.scale(2), 0, h - JBUI.scale(6),
-//                new float[]{ONE_OVER_SEVEN * 1, ONE_OVER_SEVEN * 2, ONE_OVER_SEVEN * 3, ONE_OVER_SEVEN * 4, ONE_OVER_SEVEN * 5, ONE_OVER_SEVEN * 6, ONE_OVER_SEVEN * 7},
-//                new Color[]{Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.cyan, Color.blue, VIOLET});
-
         Paint old = g.getPaint();
-//        g.setPaint(mainColor);
-
         final float R = JBUI.scale(8f);
         final float R2 = JBUI.scale(9f);
         final Area containingRoundRect = new Area(new RoundRectangle2D.Float(1f, 1f, w - 2f, h - 2f, R, R));
-//        while (x < Math.max(c.getWidth(), c.getHeight())) {
-//            Path2D.Double path = new Path2D.Double();
-//            float ww = getPeriodLength() / 2f;
-//            path.moveTo(x, 0);
-//            path.lineTo(x+ww, 0);
-//            path.lineTo(x+ww - h / 2, h);
-//            path.lineTo(x-h / 2, h);
-//            path.lineTo(x, 0);
-//            path.closePath();
-//
-//            final Area area = new Area(path);
-//            area.intersect(containingRoundRect);
         g.fill(containingRoundRect);
-//            x+= getPeriodLength();
-//        }
-//        g.setPaint(old);
         offset = (offset + 1) % getPeriodLength();
         offset2 += velocity;
         if (offset2 <= 2) {
@@ -143,11 +118,8 @@ public class ProgressBarUi extends BasicProgressBarUI {
             offset2 = w - JBUI.scale(15);
             velocity = -1;
         }
-//        offset2 = (offset2 + 1) % (w - 3);
         Area area = new Area(new Rectangle2D.Float(0, 0, w, h));
         area.subtract(new Area(new RoundRectangle2D.Float(1f, 1f, w - 2f, h - 2f, R, R)));
-//        g.setPaint(Gray._128);
-//        g.setPaint(baseRainbowPaint);
         if (c.isOpaque()) {
             g.fill(area);
         }
@@ -156,13 +128,9 @@ public class ProgressBarUi extends BasicProgressBarUI {
 
         Container parent = c.getParent();
         Color background = parent != null ? parent.getBackground() : UIUtil.getPanelBackground();
-//        g.setPaint(background);
-//        g.setPaint(baseRainbowPaint);
         if (c.isOpaque()) {
             g.fill(area);
         }
-
-//        g.setPaint(baseRainbowPaint);
 
         Icon scaledIcon = selectedIcon;
         if (velocity > 0) {
@@ -178,9 +146,6 @@ public class ProgressBarUi extends BasicProgressBarUI {
             scaledIcon = ((ScalableIcon) selectedReverseIcon);
             isReverse = true;
         }
-//        if (velocity < 0) {
-//            scaledIcon = new ReflectedIcon(scaledIcon);
-//        }
 
         //x == space from right to left
         //y == space from bottom to top
@@ -243,17 +208,21 @@ public class ProgressBarUi extends BasicProgressBarUI {
         g2.fill(new RoundRectangle2D.Float(0, 0, w - off, h - off, R2, R2));
         g2.setColor(background);
         g2.fill(new RoundRectangle2D.Float(off, off, w - 2f * off - off, h - 2f * off - off, R, R));
-//        g2.setColor(progressBar.getForeground());
-//        g2.setPaint(new LinearGradientPaint(0, JBUI.scale(2), 0, h - JBUI.scale(6),
-//                new float[]{ONE_OVER_SEVEN * 1, ONE_OVER_SEVEN * 2, ONE_OVER_SEVEN * 3, ONE_OVER_SEVEN * 4, ONE_OVER_SEVEN * 5, ONE_OVER_SEVEN * 6, ONE_OVER_SEVEN * 7},
-//                new Color[]{Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.cyan, Color.blue, VIOLET}));
 
-        g2.setPaint(mainColor);
+        BufferedImage bi = null;
+        try {
+            bi = ImageIO.read(new File(getClass().getClassLoader().getResource("/grass.png").toURI()));
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        }
+        TexturePaint tp = new TexturePaint(bi, new Rectangle2D.Double(0, 2, 16, 16));
+        g2.setPaint(tp);
+
         g2.fill(new RoundRectangle2D.Float(2f * off, 2f * off, amountFull - JBUI.scale(5f), h - JBUI.scale(5f), JBUI.scale(7f), JBUI.scale(7f)));
 
         //x == space from right to left
         //y == space from bottom to top
-        Icons.ICON.paintIcon(progressBar, g2, amountFull - JBUI.scale(3), -JBUI.scale(0));
+        Icons.ICON.paintIcon(progressBar, g2, amountFull - JBUI.scale(9), -JBUI.scale(0));
         g2.translate(0, -(c.getHeight() - h) / 2);
 
         // Deal with possible text painting
