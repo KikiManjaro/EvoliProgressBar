@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>manjaro.epb</id>
   <name>Eevee Progress Bar</name>
-  <version>1.2</version>
+  <version>1.3</version>
   <idea-version since-build="192"/>
   <vendor email="kylian.meulin@gmail.com">KikiManjaro</vendor>
 
@@ -13,7 +13,8 @@
   <change-notes><![CDATA[
       <em>1.0 Creation of the Eevee Progress Bar Project</em><br>
       <em>1.1 Better plugin icon and removing white bar while indeterminate</em><br>
-      <em>1.1 Adding some grass on the determinate bar</em><br>
+      <em>1.2 Adding some grass on the determinate bar</em><br>
+      <em>1.3 Fix resources loading and paths</em><br>
     ]]>
   </change-notes>
 

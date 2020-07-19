@@ -20,10 +20,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class ProgressBarUi extends BasicProgressBarUI {
@@ -33,8 +30,14 @@ public class ProgressBarUi extends BasicProgressBarUI {
     Icon selectedReverseIcon;
     Icon[] iconList;
     Icon[] reverseIconList;
+    BufferedImage bi = null;
 
     public ProgressBarUi() {
+        try {
+            bi = ImageIO.read(getClass().getResource("/grass.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         iconList = new Icon[]{Icons.ICON2, Icons.ICON4, Icons.ICON6, Icons.ICON8, Icons.ICON10, Icons.ICON12};
 
         reverseIconList = new Icon[]{Icons.RICON3, Icons.RICON5, Icons.RICON7, Icons.RICON9, Icons.RICON11, Icons.RICON13};
@@ -209,14 +212,10 @@ public class ProgressBarUi extends BasicProgressBarUI {
         g2.setColor(background);
         g2.fill(new RoundRectangle2D.Float(off, off, w - 2f * off - off, h - 2f * off - off, R, R));
 
-        BufferedImage bi = null;
-        try {
-            bi = ImageIO.read(new File(getClass().getClassLoader().getResource("/grass.png").toURI()));
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
+        if (bi != null) {
+            TexturePaint tp = new TexturePaint(bi, new Rectangle2D.Double(0, 2, 16, 16));
+            g2.setPaint(tp);
         }
-        TexturePaint tp = new TexturePaint(bi, new Rectangle2D.Double(0, 2, 16, 16));
-        g2.setPaint(tp);
 
         g2.fill(new RoundRectangle2D.Float(2f * off, 2f * off, amountFull - JBUI.scale(5f), h - JBUI.scale(5f), JBUI.scale(7f), JBUI.scale(7f)));
 
