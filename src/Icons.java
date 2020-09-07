@@ -10,6 +10,7 @@ public interface Icons {
     Icon ICON8 = IconLoader.getIcon("/8.gif");
     Icon ICON10 = IconLoader.getIcon("/10.gif");
     Icon ICON12 = IconLoader.getIcon("/12.gif");
+    Icon ICON14 = IconLoader.getIcon("/14.gif");
 
     Icon RICON = IconLoader.getIcon("/1.gif");
     Icon RICON3 = IconLoader.getIcon("/3.gif");
@@ -18,5 +19,5 @@ public interface Icons {
     Icon RICON9 = IconLoader.getIcon("/9.gif");
     Icon RICON11 = IconLoader.getIcon("/11.gif");
     Icon RICON13 = IconLoader.getIcon("/13.gif");
-
+    Icon RICON15 = IconLoader.getIcon("/15.gif");
 }

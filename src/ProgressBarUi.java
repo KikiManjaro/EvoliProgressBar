@@ -38,9 +38,9 @@ public class ProgressBarUi extends BasicProgressBarUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        iconList = new Icon[]{Icons.ICON2, Icons.ICON4, Icons.ICON6, Icons.ICON8, Icons.ICON10, Icons.ICON12};
+        iconList = new Icon[]{Icons.ICON2, Icons.ICON4, Icons.ICON6, Icons.ICON8, Icons.ICON10, Icons.ICON12, Icons.ICON14};
 
-        reverseIconList = new Icon[]{Icons.RICON3, Icons.RICON5, Icons.RICON7, Icons.RICON9, Icons.RICON11, Icons.RICON13};
+        reverseIconList = new Icon[]{Icons.RICON3, Icons.RICON5, Icons.RICON7, Icons.RICON9, Icons.RICON11, Icons.RICON13, Icons.RICON15};
 
         selectedIcon = getRandomOddIcon();
         selectedReverseIcon = getRandomEvenIcon();
