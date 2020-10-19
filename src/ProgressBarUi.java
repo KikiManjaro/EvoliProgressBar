@@ -1,5 +1,4 @@
 import com.intellij.openapi.ui.GraphicsConfig;
-import com.intellij.openapi.util.ScalableIcon;
 import com.intellij.ui.Gray;
 import com.intellij.ui.JBColor;
 import com.intellij.util.ArrayUtil;
@@ -24,8 +23,6 @@ import java.io.IOException;
 import java.util.Random;
 
 public class ProgressBarUi extends BasicProgressBarUI {
-    private static final Color VIOLET = new Color(90, 0, 157);
-    private static final Color mainColor = Color.WHITE;
     Icon selectedIcon;
     Icon selectedReverseIcon;
     Icon[] iconList;
@@ -80,12 +77,10 @@ public class ProgressBarUi extends BasicProgressBarUI {
 
     @Override
     protected void paintIndeterminate(Graphics g2d, JComponent c) {
-
         if (!(g2d instanceof Graphics2D)) {
             return;
         }
         Graphics2D g = (Graphics2D) g2d;
-
 
         Insets b = progressBar.getInsets(); // area for border
         int barRectWidth = progressBar.getWidth() - (b.right + b.left);
@@ -140,24 +135,21 @@ public class ProgressBarUi extends BasicProgressBarUI {
             if (isReverse) {
                 selectedIcon = getRandomOddIconExcept(scaledIcon);
             }
-            scaledIcon = ((ScalableIcon) selectedIcon);
+            scaledIcon = selectedIcon;
             isReverse = false;
         } else {
             if (!isReverse) {
                 selectedReverseIcon = getRandomEvenIconExcept(scaledIcon);
             }
-            scaledIcon = ((ScalableIcon) selectedReverseIcon);
+            scaledIcon = selectedReverseIcon;
             isReverse = true;
         }
 
-        //x == space from right to left
-        //y == space from bottom to top
         scaledIcon.paintIcon(progressBar, g, offset2 - JBUI.scale(3), -JBUI.scale(0));
 
         g.draw(new RoundRectangle2D.Float(1f, 1f, w - 2f - 1f, h - 2f - 1f, R, R));
         g.translate(0, -(c.getHeight() - h) / 2);
 
-        // Deal with possible text painting
         if (progressBar.isStringPainted()) {
             if (progressBar.getOrientation() == SwingConstants.HORIZONTAL) {
                 paintString(g, b.left, b.top, barRectWidth, barRectHeight, boxRect.x, boxRect.width);
@@ -219,8 +211,6 @@ public class ProgressBarUi extends BasicProgressBarUI {
 
         g2.fill(new RoundRectangle2D.Float(2f * off, 2f * off, amountFull - JBUI.scale(5f), h - JBUI.scale(5f), JBUI.scale(7f), JBUI.scale(7f)));
 
-        //x == space from right to left
-        //y == space from bottom to top
         Icons.ICON.paintIcon(progressBar, g2, amountFull - JBUI.scale(9), -JBUI.scale(0));
         g2.translate(0, -(c.getHeight() - h) / 2);
 
@@ -314,7 +304,5 @@ public class ProgressBarUi extends BasicProgressBarUI {
         int i = r.nextInt(icons.length);
         return icons[i];
     }
-
-
 }
 
