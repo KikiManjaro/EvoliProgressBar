@@ -1,11 +1,11 @@
 <idea-plugin>
-  <id>manjaro.epb</id>
-  <name>Eevee Progress Bar</name>
-  <version>1.6</version>
-  <idea-version since-build="193"/>
-  <vendor email="kylian.meulin@gmail.com">KikiManjaro</vendor>
+    <id>manjaro.epb</id>
+    <name>Eevee Progress Bar</name>
+    <version>1.7</version>
+    <idea-version since-build="193"/>
+    <vendor email="kylian.meulin@gmail.com">KikiManjaro</vendor>
 
-  <description><![CDATA[
+    <description><![CDATA[
       This is the Eevee Progress Bar for IJ based IDEs based on the Nyan Progress Bar by Dmitry Batkovitch.
       It display a running Eevee for the basic bar and random eeveelution for the indeterminate one.
       <br>
@@ -19,7 +19,7 @@
       <img src="https://i.imgur.com/Q3lXoYW.gif" title="EeveeIndeterminateBar" />
     ]]></description>
 
-  <change-notes><![CDATA[
+    <change-notes><![CDATA[
       <em>1.0 Creation of the Eevee Progress Bar Project</em><br>
       <em>1.1 Better plugin icon and removing white bar while indeterminate</em><br>
       <em>1.2 Adding some grass on the determinate bar</em><br>
@@ -27,23 +27,24 @@
       <em>1.4 Adding Glaceon</em><br>
       <em>1.5 Fix description</em><br>
       <em>1.6 Fix Eevees icons rendering issues</em><br>
+      <em>1.7 Drop deprecated event listener assignment + removing swing utilities + replace JBUI.scale to JBUISCALE.scale</em><br>
     ]]>
-  </change-notes>
+    </change-notes>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <depends>com.intellij.modules.platform</depends>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
 
-  <actions>
-    <!-- Add your actions here -->
-  </actions>
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
 
-  <applicationListeners>
-    <listener class="ProgressBarLafManagerListener"
-              topic="com.intellij.ide.ui.LafManagerListener" />
-  </applicationListeners>
+    <applicationListeners>
+        <listener class="ProgressBarLafManagerListener"
+                  topic="com.intellij.ide.ui.LafManagerListener"/>
+    </applicationListeners>
 </idea-plugin>
