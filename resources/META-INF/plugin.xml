@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>manjaro.epb</id>
     <name>Eevee Progress Bar</name>
-    <version>1.7</version>
+    <version>1.8</version>
     <idea-version since-build="193"/>
     <vendor email="kylian.meulin@gmail.com">KikiManjaro</vendor>
 
@@ -28,6 +28,7 @@
       <em>1.5 Fix description</em><br>
       <em>1.6 Fix Eevees icons rendering issues</em><br>
       <em>1.7 Drop deprecated event listener assignment + removing swing utilities + replace JBUI.scale to JBUISCALE.scale</em><br>
+      <em>1.8 Support IntelliJ 2023.3 and later</em><br>
     ]]>
     </change-notes>
 
@@ -46,5 +47,7 @@
     <applicationListeners>
         <listener class="ProgressBarLafManagerListener"
                   topic="com.intellij.ide.ui.LafManagerListener"/>
+        <listener class="ProgressBarLafManagerListener"
+                  topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
 </idea-plugin>
