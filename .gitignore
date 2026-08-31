@@ -1,3 +1,22 @@
-
-# Project exclude paths
+# Build
 /out/
+build/
+*.class
+*.jar
+
+# OS
+.DS_Store
+**/.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Logs
+*.log
+*.tmp
+
+# IntelliJ - only ignore local workspace, keep shared config tracked
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/*.xml
